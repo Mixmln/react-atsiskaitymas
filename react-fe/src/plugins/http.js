@@ -4,7 +4,6 @@ export const getReq = async (url) => {
     headers: {
       'Content-type': 'application/json',
     },
-    credentials: 'include',
   };
   const response = await fetch(`http://localhost:5000/${url}`, options);
   if (response.ok) {
@@ -20,7 +19,6 @@ export const postReq = async (body, url) => {
       'Content-type': 'application/json',
     },
     body: JSON.stringify(body),
-    credentials: 'include',
   };
   const response = await fetch(`http://localhost:5000/${url}`, options);
   if (response.ok) {
@@ -36,7 +34,6 @@ export const putReq = async (body, url) => {
       'Content-type': 'application/json',
     },
     body: JSON.stringify(body),
-    credentials: 'include',
   };
   const response = await fetch(`http://localhost:5000/${url}`, options);
   if (response.ok) {
@@ -51,7 +48,6 @@ export const deleteReq = async (url) => {
     headers: {
       'Content-type': 'application/json',
     },
-    credentials: 'include',
   };
   const response = await fetch(`http://localhost:5000/${url}`, options);
   if (response.ok) {
