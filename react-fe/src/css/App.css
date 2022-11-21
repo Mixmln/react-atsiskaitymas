@@ -402,14 +402,18 @@ header a:hover {
   top: 30px;
   left: 400px;
 }
-
-.prod-current-price {
+.prod-step {
   top: 50px;
   left: 400px;
 }
 
-.prod-dis-count {
+.prod-current-price {
   top: 70px;
+  left: 400px;
+}
+
+.prod-dis-count {
+  top: 90px;
   left: 400px;
 }
 

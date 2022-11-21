@@ -6,7 +6,6 @@ import MainContext from '../context/MainContext';
 function SingleAuction({ productId }) {
   const { singleProduct, setSingleProduct, user, socket } = useContext(MainContext);
 
-  const [yourPrice, setYourPrice] = useState(0);
   const [minBid, setMinBid] = useState(0);
 
   const bidRef = useRef();
@@ -16,15 +15,17 @@ function SingleAuction({ productId }) {
   useEffect(() => {
     const interval = setInterval(() => {
       socket.emit('getProd', productId);
+      if (singleProduct.bids.length === 0) {
+        setMinBid(Number(singleProduct.currentPrice) + Number(singleProduct.step));
+      } else {
+        setMinBid(Number(singleProduct.bids[0].bid) + Number(singleProduct.step));
+      }
     }, 4000);
     return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
     socket.on('updatedProduct', (data) => {
-      if (data.bids.length > 0) {
-        setMinBid(Number(data.bids[0].bid) + Number(data.step));
-      }
       setSingleProduct(data);
     });
   }, []);
@@ -48,10 +49,10 @@ function SingleAuction({ productId }) {
     const data = {
       productId,
       bidFrom: user.username,
-      bid: bidRef.current.value,
-      startPrice: singleProduct.startPrice,
+      bid: Number(bidRef.current.value),
     };
-    if (Number(bidRef.current.value) < minBid) return;
+    console.log('bid ==> ', data.bid);
+    if (Number(data.bid) < minBid) return;
     socket.emit('bid', data);
   };
 
@@ -100,16 +101,9 @@ function SingleAuction({ productId }) {
                 </div>
               </div>
             </div>
-            <div className='your-price-info'>Your price will be: {yourPrice}</div>
+            {/* <div className='your-price-info'>Your price will be: {yourPrice}</div> */}
             <div className='prod-bid-div'>
-              <input
-                ref={bidRef}
-                type='number'
-                min={minBid > 0 ? minBid : singleProduct.step}
-                step={singleProduct.step}
-                defaultValue={minBid > 0 ? minBid : singleProduct.step}
-                onChange={() => setYourPrice(singleProduct.currentPrice + Number(bidRef.current.value))}
-              />
+              <input ref={bidRef} type='number' min={minBid} step={singleProduct.step} defaultValue={minBid} />
 
               <button onClick={bid}>Bid</button>
               {/* <p>You can't outbid your own bid</p> */}

@@ -45,6 +45,7 @@ export default function SingleProduct({ prod }) {
       <img src={prod.image} alt='' />
       <p className='prod-id'>Lot # {prod.productId}</p>
       <p className='prod-price'>Start price: {prod.startPrice} $</p>
+      <p className='prod-step'>Step: {prod.step} $</p>
       <p className='prod-current-price'>Current price: {prod.currentPrice} $</p>
       <p className='prod-dis-count'>Bids quantity: {prod.bids.length}</p>
       <p className='prod-owner'>Product uploaded by: {prod.productOwner}</p>

@@ -36,7 +36,7 @@ module.exports = (io) => {
       socket.leave(room);
     });
 
-    socket.on('bid', async ({ productId, bid, bidFrom, startPrice }) => {
+    socket.on('bid', async ({ productId, bid, bidFrom }) => {
       const bidObj = {
         bidFrom,
         bid,
@@ -49,7 +49,7 @@ module.exports = (io) => {
             bids: bidObj,
           },
           $set: {
-            currentPrice: Number(startPrice) + Number(bid),
+            currentPrice: Number(bid),
           },
         }
       );
