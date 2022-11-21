@@ -51,7 +51,7 @@ function SingleAuction({ productId }) {
       bidFrom: user.username,
       bid: Number(bidRef.current.value),
     };
-    console.log('bid ==> ', data.bid);
+
     if (Number(data.bid) < minBid) return;
     socket.emit('bid', data);
   };
